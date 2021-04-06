@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     component: NewDeck,
   },
   {
-    path: '/deck/:deckId',
+    path: '/deck/:deckId/:rotationCard',
     name: 'Show Deck',
     component: () => import('../views/ShowDeck.vue'),
   },

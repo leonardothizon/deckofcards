@@ -44,8 +44,9 @@ export default defineComponent({
     },
   },
   async mounted() {
-    console.log(this);
     const deckId = this.$route?.params.deckId;
+    const rotationCard: string = String(this.$route?.params.rotationCard);
+    await this.$store.dispatch('setRotationCard', new Card(rotationCard));
     await this.$store.dispatch('retrieveDeck', deckId);
   },
   methods: {
@@ -53,20 +54,23 @@ export default defineComponent({
       const rotationCard: Card = this.$store?.state.rotationCard;
 
       let cardValueOrder = ['2', 'A', 'K', 'Q', 'J', '0', '9', '8', '7', '6', '5', '4', '3'];
-      let cardSuitOrder = ['S', 'C', 'D', 'H'];
+      let cardSuitOrder = ['H', 'D', 'C', 'S'];
 
-      // REMOVE ROTATION CARD VALUES AND ADD TO THE FIRST INDEX TO SET THE MAXIMUM IMPORTANCE
-      cardValueOrder.splice(cardValueOrder.indexOf(rotationCard.value), 1);
-      cardSuitOrder.splice(cardSuitOrder.indexOf(rotationCard.suite), 1);
-      cardValueOrder.unshift(rotationCard.value);
-      cardSuitOrder.unshift(rotationCard.suite);
+      // REORDER ARRAY ACCORDING TO THE ROTATION CARD VALUE AND SUITE
+      const rotationValueIndex = cardValueOrder.indexOf(rotationCard.value);
+      const removedValues = cardValueOrder.splice(rotationValueIndex, cardValueOrder.length - rotationValueIndex);
+      const rotationSuiteIndex = cardSuitOrder.indexOf(rotationCard.suite);
+      const removedSuites = cardSuitOrder.splice(rotationSuiteIndex, cardSuitOrder.length - rotationSuiteIndex);
+
+      cardValueOrder.unshift(...removedValues);
+      cardSuitOrder.unshift(...removedSuites);
 
       let cards: Card[] = [...this.$store?.state?.deckCards]; // avoid mutating the array form state
       cards.sort((cardA, cardB) => {
-        if (cardA.value !== cardB.value) {
-          return cardValueOrder.indexOf(cardA.value) > cardValueOrder.indexOf(cardB.value) ? 1 : -1;
+        if (cardA.suite !== cardB.suite) {
+          return cardSuitOrder.indexOf(cardA.suite) > cardSuitOrder.indexOf(cardB.suite) ? 1 : -1;
         }
-        return cardSuitOrder.indexOf(cardA.suite) > cardSuitOrder.indexOf(cardB.suite) ? 1 : -1;
+        return cardValueOrder.indexOf(cardA.value) > cardValueOrder.indexOf(cardB.value) ? 1 : -1;
       });
       this.orderedCards = cards;
     },

@@ -3,14 +3,9 @@ import ShowDeck from "@/views/ShowDeck.vue";
 
 const mockedCards = [
   {
-    id: "3H",
-    value: "3",
-    suite: "H"
-  },
-  {
-    id: "9C",
-    value: "9",
-    suite: "C"
+    id: "7D",
+    value: "7",
+    suite: "D"
   },
   {
     id: "AS",
@@ -18,22 +13,27 @@ const mockedCards = [
     suite: "S"
   },
   {
-    id: "5D",
-    value: "5",
-    suite: "D"
+    id: "QH",
+    value: "Q",
+    suite: "H"
   },
   {
-    id: "0H",
-    value: "0",
-    suite: "H"
+    id: "9S",
+    value: "9",
+    suite: "S"
+  },
+  {
+    id: "6D",
+    value: "6",
+    suite: "D"
   }
 ];
 
 const $store = {
   state: {
     rotationCard: {
-      id: "5H",
-      value: "5",
+      id: "2H",
+      value: "2",
       suite: "H"
     },
     deckCards: mockedCards
@@ -45,7 +45,7 @@ let wrapper = null;
 
 describe("ShowDeck.vue", () => {
   it("should order cards properly", () => {
-    const expectedArray = [mockedCards[3], mockedCards[2], mockedCards[4], mockedCards[1], mockedCards[0]];
+    const expectedArray = [mockedCards[2], mockedCards[0], mockedCards[4], mockedCards[1], mockedCards[3]];
     wrapper = shallowMount(ShowDeck, {
       props: {},
     });

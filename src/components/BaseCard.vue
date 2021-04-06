@@ -26,7 +26,7 @@ export default defineComponent({
   },
   computed: {
     color():string {
-      return ['D', 'S'].includes(this.card.suite) ? 'black' : 'red';
+      return ['C', 'S'].includes(this.card.suite) ? 'black' : 'red';
     },
     suiteSymbol(): string {
       const symbols: Object = {
