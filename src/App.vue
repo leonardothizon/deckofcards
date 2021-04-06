@@ -30,7 +30,7 @@ body {
 }
 .deck {
   &__container {
-    max-width: 800px;
+    max-width: 960px;
     margin: auto;
     padding: 50px 0;
   }
