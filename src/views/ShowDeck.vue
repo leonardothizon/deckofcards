@@ -50,8 +50,7 @@ export default defineComponent({
   },
   methods: {
     orderCardsByRotation(): void {
-      console.log(this);
-      const rotationCard: Card = this.$store.state.rotationCard;
+      const rotationCard: Card = this.$store?.state.rotationCard;
 
       let cardValueOrder = ['2', 'A', 'K', 'Q', 'J', '0', '9', '8', '7', '6', '5', '4', '3'];
       let cardSuitOrder = ['S', 'C', 'D', 'H'];
@@ -62,7 +61,7 @@ export default defineComponent({
       cardValueOrder.unshift(rotationCard.value);
       cardSuitOrder.unshift(rotationCard.suite);
 
-      let cards: Card[] = [...this.$store.state?.deckCards]; // avoid mutating the array form state
+      let cards: Card[] = [...this.$store?.state?.deckCards]; // avoid mutating the array form state
       cards.sort((cardA, cardB) => {
         if (cardA.value !== cardB.value) {
           return cardValueOrder.indexOf(cardA.value) > cardValueOrder.indexOf(cardB.value) ? 1 : -1;
