@@ -24,12 +24,8 @@ export default defineComponent({
       required: true
     },
   },
-  mounted() {
-    console.log(this.card);
-  },
   computed: {
     color():string {
-      console.log(this.card.suite);
       return ['D', 'S'].includes(this.card.suite) ? 'black' : 'red';
     },
     suiteSymbol(): string {
@@ -56,6 +52,7 @@ export default defineComponent({
     box-sizing: border-box;
     padding: 10px;
     margin-right: 20px;
+    margin-bottom: 20px;
     background-color: var(--white);
     border-radius: 10px;
     width: 158px;

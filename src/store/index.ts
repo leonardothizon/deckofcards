@@ -21,10 +21,11 @@ export default createStore({
   },
   actions: {
     async createNewDeck({ commit }, { cards, rotation }) {
-      const cardsIds = cards.reduce((tot: string, card: Card) => tot + ',' + card.id, '');
-      const parameter = `${rotation}${cardsIds}`;
-      const deckData = await axios.get(`https://deckofcardsapi.com/api/deck/new/shuffle/?cards=${parameter}`);
-      const newDeckId = deckData.data.deck_id;
+      const newDeckData = await axios.get(`https://deckofcardsapi.com/api/deck/new`);
+      const newDeckId = newDeckData.data.deck_id;
+      const cardsIds = cards.reduce((total: string, card: Card) => total + card.id + ',', '');
+      const parameter = `${cardsIds}${rotation}`;
+      await axios.get(`https://deckofcardsapi.com/api/deck/${newDeckId}/shuffle/?cards=${parameter}`);
       await commit('setDeck', newDeckId);
     },
     async retrieveDeck({ commit }, deckId) {
